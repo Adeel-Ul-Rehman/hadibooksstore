@@ -1,0 +1,209 @@
+@import "tailwindcss";
+
+:root {
+  --transition-all: all 0.3s ease-in-out;
+}
+
+.bg-day {
+  background-color: #f9fafb;
+  transition: var(--transition-all);
+}
+
+.bg-night {
+  background-color: #000000; /* Fully black for dark mode */
+  transition: var(--transition-all);
+}
+
+.text-night-text {
+  color: #ffffff; /* White text for dark mode */
+  transition: var(--transition-all);
+}
+
+.bg-day-card {
+  background-color: #ffffff;
+  transition: var(--transition-all);
+}
+
+.bg-night-card {
+  background-color: #000000; /* Fully black for dark mode cards */
+  transition: var(--transition-all);
+}
+
+.bg-day-input {
+  background-color: #f3f4f6;
+  transition: var(--transition-all);
+}
+
+.bg-night-input {
+  background-color: #1a1a1a; /* Very dark gray for inputs in dark mode */
+  transition: var(--transition-all);
+}
+
+.border-day {
+  border-color: #d1d5db;
+  transition: var(--transition-all);
+}
+
+.border-night {
+  border-color: #333333; /* Dark gray border for dark mode */
+  transition: var(--transition-all);
+}
+
+.text-day-muted {
+  color: #6b7280;
+  transition: var(--transition-all);
+}
+
+.text-night-muted {
+  color: #9ca3af;
+  transition: var(--transition-all);
+}
+
+@keyframes wave {
+  0% { transform: rotate(0deg); }
+  10% { transform: rotate(14deg); }
+  20% { transform: rotate(-8deg); }
+  30% { transform: rotate(14deg); }
+  40% { transform: rotate(-4deg); }
+  50% { transform: rotate(10deg); }
+  60% { transform: rotate(0deg); }
+  100% { transform: rotate(0deg); }
+}
+
+@keyframes light-cycle {
+  0% {
+    color: #E31837;
+    text-shadow: 0 0 5px rgba(227, 24, 55, 0.8), 0 0 10px rgba(227, 24, 55, 0.6);
+  }
+  50% {
+    color: #006491;
+    text-shadow: 0 0 5px rgba(0, 100, 145, 0.8), 0 0 10px rgba(0, 100, 145, 0.6);
+  }
+  100% {
+    color: #E31837;
+    text-shadow: 0 0 5px rgba(227, 24, 55, 0.8), 0 0 10px rgba(227, 24, 55, 0.6);
+  }
+}
+
+.animate-light-cycle {
+  animation: light-cycle 5s ease-in-out infinite;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes slideUp {
+  from { transform: translateY(20px); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
+}
+
+@keyframes slideInLeft {
+  from { transform: translateX(-50px); opacity: 0; }
+  to { transform: translateX(0); opacity: 1; }
+}
+
+@keyframes slideInRight {
+  from { transform: translateX(50px); opacity: 0; }
+  to { transform: translateX(0); opacity: 1; }
+}
+
+@keyframes pulse-slow {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.02); }
+  100% { transform: scale(1); }
+}
+
+.animate-wave {
+  animation: wave 1.5s infinite;
+  transform-origin: 70% 70%;
+}
+
+.animate-fade-in {
+  animation: fadeIn 0.2s ease-out;
+}
+
+.animate-pulse-slow {
+  animation: pulse-slow 2s ease-in-out infinite;
+}
+
+.animate-slide-in-left {
+  animation: slideInLeft 1s ease-in;
+}
+
+.animate-slide-in-right {
+  animation: slideInRight 1s ease-in;
+}
+
+.otp-input {
+  transition: all 0.2s ease-in-out;
+}
+
+.otp-input:focus {
+  transform: scale(1.05);
+}
+
+@keyframes pulse-text {
+  0% {
+    transform: scale(1);
+    opacity: 1;
+  }
+  50% {
+    transform: scale(1.02);
+    opacity: 0.95;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+.animate-pulse-text {
+  animation: pulse-text 2s ease-in-out infinite;
+}
+
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-slideDown {
+  animation: slideDown 0.3s ease-out forwards;
+}
+
+/* Search suggestions styling */
+.search-suggestion-item {
+  transition: background-color 0.2s ease;
+}
+
+.search-suggestion-item:hover {
+  background-color: #f9fafb;
+}
+
+.status-badge.bg-green-100 {
+  background-color: #DCFCE7 !important;
+  color: #166534 !important;
+}
+.status-badge.bg-blue-100 {
+  background-color: #DBEAFE !important;
+  color: #1E40AF !important;
+}
+.status-badge.bg-yellow-100 {
+  background-color: #FEF9C3 !important;
+  color: #854D0E !important;
+}
+.status-badge.bg-red-100 {
+  background-color: #FEE2E2 !important;
+  color: #991B1B !important;
+}
+.status-badge.bg-gray-100 {
+  background-color: #F3F4F6 !important;
+  color: #374151 !important;
+}

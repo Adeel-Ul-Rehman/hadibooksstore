@@ -1,0 +1,33 @@
+/* Custom Toast styles for react-toastify */
+.Toastify__toast-container {
+  left: 50% !important;
+  right: auto !important;
+  transform: translateX(-50%) !important;
+  width: auto !important;
+  max-width: 100vw !important;
+  top: 1.5em !important;
+  bottom: auto !important;
+  justify-content: center !important;
+  align-items: flex-start !important;
+  display: flex !important;
+  pointer-events: none;
+}
+.Toastify__toast {
+  margin: 0 auto !important;
+  border-radius: 10px !important;
+  padding: 0.5em 1em !important;
+  left: 50% !important;
+  transform: translateX(-50%) !important;
+  min-width: 300px;
+  max-width: 80vw;
+  width: auto !important;
+  font-size: 1rem;
+  pointer-events: all;
+}
+@media (max-width: 640px) {
+  .Toastify__toast {
+    min-width: 60vw !important;
+    max-width: 80vw !important;
+    font-size: 0.85rem !important;
+  }
+}
