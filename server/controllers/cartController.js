@@ -22,6 +22,10 @@ const addToCart = async (req, res) => {
     const { productId, quantity = 1 } = req.body;
     const userId = req.userId;
 
+    if (!userId) {
+      return res.status(401).json({ success: false, message: 'Authentication required. Please login.' });
+    }
+
     if (!productId || isNaN(quantity) || quantity < 1) {
       return res.status(400).json({ success: false, message: 'Invalid productId or quantity' });
     }
@@ -90,7 +94,7 @@ const getCart = async (req, res) => {
     const tokenUserId = req.userId; // From userAuth middleware
 
     // Security: Ensure requested userId matches authenticated user
-    if (paramUserId !== tokenUserId) {
+    if (!tokenUserId || paramUserId !== tokenUserId) {
       return res.status(403).json({ success: false, message: 'Unauthorized access to cart' });
     }
 
@@ -150,6 +154,10 @@ const updateCartItem = async (req, res) => {
     const { productId, quantity } = req.body;
     const userId = req.userId;
 
+    if (!userId) {
+      return res.status(401).json({ success: false, message: 'Authentication required. Please login.' });
+    }
+
     if (!productId || isNaN(quantity) || quantity < 1) {
       return res.status(400).json({ success: false, message: 'Invalid productId or quantity' });
     }
@@ -197,6 +205,10 @@ const removeCartItem = async (req, res) => {
   try {
     const { productId } = req.body;
     const userId = req.userId;
+
+    if (!userId) {
+      return res.status(401).json({ success: false, message: 'Authentication required. Please login.' });
+    }
 
     if (!productId) {
       return res.status(400).json({ success: false, message: 'Invalid productId' });

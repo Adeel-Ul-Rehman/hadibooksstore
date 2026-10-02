@@ -106,9 +106,6 @@ export const register = async (req, res) => {
       console.error('❌ Error triggering verification OTP email:', emailError);
     }
 
-    // For debugging: Log the OTP (remove in production)
-    console.log(`OTP generated for ${email}: ${otp}`);
-
     return res.status(201).json({
       success: true,
       message,
@@ -165,9 +162,6 @@ export const sendVerifyOtp = async (req, res) => {
     } catch (emailError) {
       console.error('❌ Error triggering resend verification OTP email:', emailError);
     }
-
-    // For debugging: Log the OTP (remove in production)
-    console.log(`Resend OTP generated for ${user.email}: ${otp}`);
 
     return res.json({
       success: true,
@@ -602,8 +596,6 @@ export const sendResetOtp = async (req, res) => {
       console.error('❌ Error triggering reset OTP email:', emailError);
     }
     
-    console.log(`✅ Password reset OTP generated for ${email}: ${otp}`);
-    
     return res.json({
       success: true,
       message: "Password reset OTP sent to email",
@@ -766,6 +758,9 @@ export const resetPassword = async (req, res) => {
 export const updateProfile = async (req, res) => {
   try {
     const userId = req.userId;
+    if (!userId) {
+      return res.status(401).json({ success: false, message: "Authentication required" });
+    }
 
     const {
       name,
@@ -1010,6 +1005,13 @@ export const deleteAccount = async (req, res) => {
     const { email, password } = req.body;
     const userId = req.userId;
 
+    if (!userId) {
+      return res.status(401).json({
+        success: false,
+        message: "Authentication required",
+      });
+    }
+
     if (!email || !password) {
       return res.status(400).json({
         success: false,
@@ -1070,6 +1072,13 @@ export const deleteAccount = async (req, res) => {
 export const removeProfilePicture = async (req, res) => {
   try {
     const userId = req.userId;
+
+    if (!userId) {
+      return res.status(401).json({
+        success: false,
+        message: "Authentication required",
+      });
+    }
 
     const user = await prisma.user.findUnique({ where: { id: userId } });
     if (!user) {

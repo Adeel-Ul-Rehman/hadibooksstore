@@ -97,8 +97,6 @@ const updateAdmin = async (req, res) => {
     }
     if (profilePicture) updateData.profilePicture = profilePicture;
 
-    console.log('Update data for Prisma:', updateData);
-
     // Update admin in database
     const updatedAdmin = await prisma.admin.update({
       where: { id: parseInt(id) },
@@ -110,8 +108,6 @@ const updateAdmin = async (req, res) => {
         profilePicture: true,
       }
     });
-
-    console.log('Updated admin:', updatedAdmin);
 
     return res.status(200).json({
       success: true,
@@ -171,7 +167,7 @@ const adminLogin = async (req, res) => {
 
     // Generate JWT token
     const token = jwt.sign(
-      { id: admin.id },
+      { id: admin.id, role: 'admin' },
       process.env.JWT_SECRET,
       { expiresIn: '1h' }
     );
@@ -216,24 +212,25 @@ const forgotPassword = async (req, res) => {
       });
     }
 
-    // Verify shared email
-    if (sharedEmail !== 'ajadeel229@gmail.com') {
-      return res.status(400).json({
-        success: false,
-        message: 'Invalid recovery email',
-      });
-    }
-
     // Find admin by adminEmail
     const admin = await prisma.admin.findUnique({
       where: { email: adminEmail },
-      select: { id: true },
+      select: { id: true, email: true, sharedEmail: true },
     });
 
     if (!admin) {
       return res.status(404).json({
         success: false,
         message: 'Admin not found',
+      });
+    }
+
+    // Verify recovery email dynamically
+    const recoveryEmail = admin.sharedEmail || process.env.ADMIN_RECOVERY_EMAIL;
+    if (!recoveryEmail || sharedEmail.toLowerCase().trim() !== recoveryEmail.toLowerCase().trim()) {
+      return res.status(400).json({
+        success: false,
+        message: 'Invalid recovery email',
       });
     }
 
@@ -272,7 +269,6 @@ const forgotPassword = async (req, res) => {
 
     try {
       await resend.emails.send(mailOptions);
-      console.log('✅ OTP email sent to:', sharedEmail);
     } catch (emailError) {
       console.error('❌ Failed to send OTP email:', emailError.message);
       return res.status(500).json({
@@ -298,6 +294,13 @@ const verifyOtp = async (req, res) => {
   try {
     const { email, otp } = req.body;
 
+    if (!email || !otp) {
+      return res.status(400).json({
+        success: false,
+        message: 'Email and OTP are required',
+      });
+    }
+
     // Find admin by email
     const admin = await prisma.admin.findUnique({
       where: { email },
@@ -311,8 +314,14 @@ const verifyOtp = async (req, res) => {
       });
     }
 
-    // Check OTP validity
-    if (admin.resetOtp !== otp || admin.resetOtpExpireAt < Math.floor(Date.now() / 1000)) {
+    // Check OTP validity with strict non-empty check
+    if (
+      !admin.resetOtp ||
+      admin.resetOtp.trim() === '' ||
+      admin.resetOtp !== String(otp).trim() ||
+      !admin.resetOtpExpireAt ||
+      admin.resetOtpExpireAt < Math.floor(Date.now() / 1000)
+    ) {
       return res.status(400).json({
         success: false,
         message: 'Invalid or expired OTP',
@@ -336,6 +345,20 @@ const resetPassword = async (req, res) => {
   try {
     const { email, otp, newPassword } = req.body;
 
+    if (!email || !otp || !newPassword) {
+      return res.status(400).json({
+        success: false,
+        message: 'Email, OTP, and new password are required',
+      });
+    }
+
+    if (newPassword.length < 8) {
+      return res.status(400).json({
+        success: false,
+        message: 'Password must be at least 8 characters long',
+      });
+    }
+
     // Find admin by email
     const admin = await prisma.admin.findUnique({
       where: { email },
@@ -349,8 +372,14 @@ const resetPassword = async (req, res) => {
       });
     }
 
-    // Check OTP validity
-    if (admin.resetOtp !== otp || admin.resetOtpExpireAt < Math.floor(Date.now() / 1000)) {
+    // Check OTP validity with strict non-empty check
+    if (
+      !admin.resetOtp ||
+      admin.resetOtp.trim() === '' ||
+      admin.resetOtp !== String(otp).trim() ||
+      !admin.resetOtpExpireAt ||
+      admin.resetOtpExpireAt < Math.floor(Date.now() / 1000)
+    ) {
       return res.status(400).json({
         success: false,
         message: 'Invalid or expired OTP',

@@ -22,6 +22,10 @@ const addToWishlist = async (req, res) => {
     const { productId } = req.body;
     const userId = req.userId;
 
+    if (!userId) {
+      return res.status(401).json({ success: false, message: 'Authentication required. Please login.' });
+    }
+
     if (!productId) {
       return res.status(400).json({ success: false, message: 'Product ID is required' });
     }
@@ -89,15 +93,11 @@ const addToWishlist = async (req, res) => {
       },
     });
   } catch (error) {
-    console.error('Add to Wishlist Error:', {
-      message: error.message,
-      stack: error.stack,
-      body: req.body,
-    });
+    console.error('Add to Wishlist Error:', error.message);
     if (error.code === 'P2002') {
       return res.status(400).json({ success: false, message: 'Product already in wishlist' });
     }
-    return res.status(500).json({ success: false, message: 'Failed to add to wishlist', error: error.message });
+    return res.status(500).json({ success: false, message: 'Failed to add to wishlist' });
   }
 };
 
@@ -106,7 +106,7 @@ const getWishlist = async (req, res) => {
     const paramUserId = req.params.userId;
     const tokenUserId = req.userId;
 
-    if (paramUserId !== tokenUserId) {
+    if (!tokenUserId || paramUserId !== tokenUserId) {
       return res.status(403).json({ success: false, message: 'Unauthorized access to wishlist' });
     }
 
@@ -147,12 +147,8 @@ const getWishlist = async (req, res) => {
       },
     });
   } catch (error) {
-    console.error('Get Wishlist Error:', {
-      message: error.message,
-      stack: error.stack,
-      params: req.params,
-    });
-    return res.status(500).json({ success: false, message: 'Failed to retrieve wishlist', error: error.message });
+    console.error('Get Wishlist Error:', error.message);
+    return res.status(500).json({ success: false, message: 'Failed to retrieve wishlist' });
   }
 };
 
@@ -160,6 +156,10 @@ const removeFromWishlist = async (req, res) => {
   try {
     const { productId } = req.body;
     const userId = req.userId;
+
+    if (!userId) {
+      return res.status(401).json({ success: false, message: 'Authentication required. Please login.' });
+    }
 
     if (!productId) {
       return res.status(400).json({ success: false, message: 'Product ID is required' });
@@ -214,12 +214,8 @@ const removeFromWishlist = async (req, res) => {
       },
     });
   } catch (error) {
-    console.error('Remove from Wishlist Error:', {
-      message: error.message,
-      stack: error.stack,
-      body: req.body,
-    });
-    return res.status(500).json({ success: false, message: 'Failed to remove from wishlist', error: error.message });
+    console.error('Remove from Wishlist Error:', error.message);
+    return res.status(500).json({ success: false, message: 'Failed to remove from wishlist' });
   }
 };
 

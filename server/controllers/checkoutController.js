@@ -8,10 +8,6 @@ const prisma = new PrismaClient();
 
 // CORS helper to add headers to all responses
 const allowedOrigins = [
-  'https://hadibookstore.shop',
-  'https://www.hadibookstore.shop',
-  'https://api.hadibookstore.shop',
-  'http://api.hadibookstore.shop',
   'http://localhost:5173',
   'http://localhost:5174'
 ];
@@ -25,7 +21,6 @@ const addCorsHeaders = (req, res) => {
         url.hostname === 'localhost' ||
         url.hostname === '127.0.0.1' ||
         url.hostname.endsWith('.vercel.app') ||
-        url.hostname.endsWith('.hadibookstore.shop') ||
         allowedOrigins.includes(origin) ||
         (process.env.FRONTEND_URL && origin === process.env.FRONTEND_URL)
       ) {

@@ -152,7 +152,6 @@ export const sendOTPEmail = async (email, name, otp, type = 'verification') => {
     console.log(`✅ ${type} OTP email sent successfully to ${email}`);
   } else {
     console.error(`❌ Failed to send ${type} OTP email to ${email}:`, result.error);
-    console.log(`📝 OTP for ${email} (not sent via email): ${otp}`);
   }
 
   return result;

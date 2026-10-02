@@ -30,39 +30,31 @@ const allowedOrigins = [
   'http://localhost:5173',
   'http://localhost:3000',
   'http://localhost:5174',
-  'https://hadibookstore.shop',
-  'https://www.hadibookstore.shop',
   'https://hadi-books-store-frontend.vercel.app',
   'https://admin-panel-alpha-five.vercel.app',
 ];
 
 const corsOptions = {
   origin: (origin, callback) => {
-    console.log('🔍 CORS Check - Origin:', origin);
-    
-    // Allow requests with no origin (e.g., Postman, mobile apps)
+    // Allow requests with no origin (e.g., Postman, mobile apps, server-to-server)
     if (!origin) {
-      console.log('✅ No origin - allowed');
       return callback(null, true);
     }
 
     // Allow exact matches from our list
     if (allowedOrigins.includes(origin)) {
-      console.log('✅ Exact match - allowed:', origin);
       return callback(null, true);
     }
 
-    // Allow any subdomain of hadibookstore.shop or vercel.app, plus localhost
+    // Allow vercel.app deployments plus localhost
     try {
       const url = new URL(origin);
       if (
         url.hostname &&
         (url.hostname === 'localhost' ||
           url.hostname === '127.0.0.1' ||
-          url.hostname.endsWith('.hadibookstore.shop') ||
           url.hostname.endsWith('.vercel.app'))
       ) {
-        console.log('✅ Wildcard match - allowed:', origin);
         return callback(null, true);
       }
     } catch (e) {
@@ -110,7 +102,7 @@ app.use(
         sameSite: process.env.NODE_ENV === 'production' ? 'none' : 'lax',
         maxAge: 10 * 60 * 1000, // 10 minutes
       };
-      if (process.env.COOKIE_DOMAIN && !process.env.COOKIE_DOMAIN.includes('vercel.app') && !process.env.COOKIE_DOMAIN.includes('hadibookstore.shop')) {
+      if (process.env.COOKIE_DOMAIN && !process.env.COOKIE_DOMAIN.includes('vercel.app')) {
         cookieCfg.domain = process.env.COOKIE_DOMAIN;
       }
       return cookieCfg;

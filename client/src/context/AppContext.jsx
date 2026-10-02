@@ -33,7 +33,7 @@ const AppContextProvider = ({ children }) => {
   const computeRuntimeApiBase = () => {
     // Return the API host root (no trailing /api)
     const builtApi = import.meta.env.VITE_API_URL;
-    if (builtApi && !builtApi.includes('hadibookstore.shop')) {
+    if (builtApi) {
       return builtApi.replace(/\/api\/?$/, '');
     }
     if (typeof window === 'undefined') return '';

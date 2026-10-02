@@ -22,7 +22,7 @@ const getFrontendUrl = () => {
 
 // Helper function to get cookie domain based on environment
 const getCookieDomain = () => {
-  if (process.env.COOKIE_DOMAIN && !process.env.COOKIE_DOMAIN.includes('vercel.app') && !process.env.COOKIE_DOMAIN.includes('hadibookstore.shop')) {
+  if (process.env.COOKIE_DOMAIN && !process.env.COOKIE_DOMAIN.includes('vercel.app')) {
     return process.env.COOKIE_DOMAIN;
   }
   return undefined;

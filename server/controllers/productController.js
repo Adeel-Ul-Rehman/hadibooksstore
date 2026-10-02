@@ -81,7 +81,6 @@ const singleProduct = async (req, res) => {
 
 const getProducts = async (req, res) => {
   try {
-    console.log("Shayan is tesiting in backend at getProduct in product controler")
     const { category, page = 1, limit = 10, search = '', bestseller = false } = req.query;
     const skip = (parseInt(page) - 1) * parseInt(limit);
     const whereClause = { availability: true };
@@ -150,15 +149,10 @@ const getProducts = async (req, res) => {
       },
     });
   } catch (error) {
-    console.error('Get Products Error:', {
-      message: error.message,
-      stack: error.stack,
-      query: req.query,
-    });
+    console.error('Get Products Error:', error.message);
     return res.status(500).json({ 
       success: false, 
-      message: 'Failed to retrieve products',
-      error: error.message 
+      message: 'Failed to retrieve products'
     });
   }
 };

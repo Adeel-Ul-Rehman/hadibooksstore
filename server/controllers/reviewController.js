@@ -4,10 +4,19 @@ const prisma = new PrismaClient();
 
 const addReview = async (req, res) => {
   try {
-    const { productId, userId, rating, comment } = req.body;
+    const userId = req.userId;
+    if (!userId) {
+      return res.status(401).json({ success: false, message: 'Authentication required to post a review' });
+    }
 
-    if (!productId || !userId || !rating || rating < 1 || rating > 5) {
-      return res.status(400).json({ success: false, message: 'Product ID, user ID, and rating (1-5) are required' });
+    const { productId, rating, comment } = req.body;
+
+    if (req.body.userId && req.body.userId !== userId) {
+      return res.status(403).json({ success: false, message: 'Unauthorized review submission' });
+    }
+
+    if (!productId || !rating || rating < 1 || rating > 5) {
+      return res.status(400).json({ success: false, message: 'Product ID and rating (1-5) are required' });
     }
 
     // Validate UUID format

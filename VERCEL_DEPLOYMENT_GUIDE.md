@@ -28,13 +28,13 @@ On Vercel, this repository contains three distinct projects that can be deployed
 
 | Key | Value | Notes |
 | :--- | :--- | :--- |
-| `DATABASE_URL` | `postgresql://neondb_owner:npg_zVyi56puvdPD@ep-dark-sound-a1ll9jfs-pooler.ap-southeast-1.aws.neon.tech/neondb?sslmode=require` | Neon PostgreSQL connection string |
-| `JWT_SECRET` | `7f8d9a2b4c6e1f3a5b7d9e2f4a6c8e0d1f` | JWT token signature secret |
+| `DATABASE_URL` | `your_database_url_here` | Neon PostgreSQL connection string (copy from your local server/.env) |
+| `JWT_SECRET` | `your_jwt_secret_here` | JWT token signature secret (copy from your local server/.env) |
 | `NODE_ENV` | `production` | Production environment flag |
-| `SESSION_SECRET` | `7f8d9a2b4c6e1f3a5b7d9e2f4a6c8e0d1f3a5b7d9e2f4a6c8e0d1f3a5b7d9e` | OAuth session secret |
-| `CLOUDINARY_CLOUD_NAME` | `dzxeahjul` | Cloudinary name |
-| `CLOUDINARY_API_KEY` | `257916951987959` | Cloudinary API key |
-| `CLOUDINARY_API_SECRET` | `x0XTozkdGJt1HdDSdaY32DkgLUQ` | Cloudinary secret |
+| `SESSION_SECRET` | `your_session_secret_here` | OAuth session secret (copy from your local server/.env) |
+| `CLOUDINARY_CLOUD_NAME` | `your_cloudinary_cloud_name` | Cloudinary name (copy from your local server/.env) |
+| `CLOUDINARY_API_KEY` | `your_cloudinary_api_key` | Cloudinary API key (copy from your local server/.env) |
+| `CLOUDINARY_API_SECRET` | `your_cloudinary_api_secret` | Cloudinary secret (copy from your local server/.env) |
 | `RESEND_API_KEY` | `your_resend_api_key_here` | Resend API key for emails (from your local server/.env) |
 | `SENDER_EMAIL` | `Hadi Books Store <onboarding@resend.dev>` | Email sender address |
 | `GOOGLE_CLIENT_ID` | `your_google_client_id_here` | Google OAuth Client ID (from your local server/.env) |
