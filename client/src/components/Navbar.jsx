@@ -145,54 +145,64 @@ const Navbar = () => {
   }, [showProfileMenu]);
 
   return (
-    <header className="sticky top-0 z-50 bg-gradient-to-r from-sky-100 via-orange-100 to-red-100 shadow-md">
+    <header className="sticky top-0 z-50 editorial-glass dark:editorial-glass-dark border-b border-stone-200/80 dark:border-stone-800 shadow-[0_4px_20px_-4px_rgba(28,25,23,0.05)] transition-colors duration-200">
       {/* Main Navbar */}
-      <nav className="flex justify-between items-center py-2 px-4 sm:px-6 lg:px-8 h-16">
+      <nav className="flex justify-between items-center py-2 px-4 sm:px-6 lg:px-8 h-16 max-w-7xl mx-auto">
         {/* Logo */}
-        <div className="flex items-center ml-0 sm:ml-0 md:-ml-0">
+        <div className="flex items-center">
           <img
             src="/logo.png"
             onClick={() => navigate("/")}
             alt="Hadi Books Store Logo"
-            className="w-24 h-24 -mt-4 cursor-pointer hover:scale-105 transition-transform duration-300 ml-[-10px] md:ml-0"
+            className="w-20 h-20 -my-2 cursor-pointer hover:opacity-90 transition-opacity duration-200"
           />
         </div>
 
         {/* Desktop Nav Links */}
-        <div className="hidden md:flex items-center gap-6 absolute left-1/2 transform -translate-x-1/2">
-          {menuItems.map((item, index) => (
+        <div className="hidden md:flex items-center gap-8">
+          {menuItems.map((item) => (
             <NavLink
               key={item.path}
               to={item.path}
               className={({ isActive }) =>
-                `text-base font-semibold transition-colors duration-300 ${
+                `text-xs uppercase tracking-[0.2em] font-semibold py-1 transition-all duration-200 relative ${
                   isActive
-                    ? "text-[#00308F] underline underline-offset-4 decoration-2"
-                    : "text-gray-800 hover:text-" +
-                      ["sky-600", "orange-600", "blue-600", "teal-600"][index]
+                    ? "text-stone-900 dark:text-stone-100"
+                    : "text-stone-500 hover:text-stone-900 dark:text-stone-400 dark:hover:text-stone-100"
                 }`
               }
               aria-label={item.label}
             >
-              {item.label}
+              {({ isActive }) => (
+                <span className="relative">
+                  {item.label}
+                  {isActive && (
+                    <motion.span
+                      layoutId="activeNavIndicator"
+                      className="absolute -bottom-1 left-0 right-0 h-[2px] bg-amber-600 rounded-full"
+                      transition={{ duration: 0.2 }}
+                    />
+                  )}
+                </span>
+              )}
             </NavLink>
           ))}
         </div>
 
         {/* Right Icons */}
-        <div className="flex items-center gap-2 sm:gap-3 md:gap-4">
+        <div className="flex items-center gap-3 sm:gap-4">
           {/* Search */}
           <SearchBar isNavbar={true} />
 
           {/* Wishlist */}
           <button
-            className="relative cursor-pointer"
+            className="relative p-2 rounded-full text-stone-700 dark:text-stone-300 hover:text-amber-700 hover:bg-stone-100/60 dark:hover:bg-stone-800/60 transition-colors duration-200 cursor-pointer"
             onClick={() => navigate("/wishlist")}
             aria-label="View wishlist"
           >
-            <FiHeart className="w-5 h-5 text-gray-800 hover:text-[#00308F] transition-colors" />
+            <FiHeart className="w-5 h-5" />
             {getWishlistCount() > 0 && (
-              <span className="absolute -top-2 -right-2 bg-[#00308F] text-white text-xs font-bold rounded-full h-5 w-5 flex items-center justify-center">
+              <span className="absolute 0 top-0.5 right-0.5 bg-amber-600 text-white text-[10px] font-bold rounded-full h-4 w-4 flex items-center justify-center shadow-sm">
                 {getWishlistCount()}
               </span>
             )}
@@ -200,19 +210,19 @@ const Navbar = () => {
 
           {/* Cart */}
           <button
-            className="relative cursor-pointer"
+            className="relative p-2 rounded-full text-stone-700 dark:text-stone-300 hover:text-amber-700 hover:bg-stone-100/60 dark:hover:bg-stone-800/60 transition-colors duration-200 cursor-pointer"
             onClick={() => navigate("/cart")}
             aria-label="View cart"
           >
-            <img src={assets.cart_icon} alt="Cart" className="w-6 h-6" />
+            <img src={assets.cart_icon} alt="Cart" className="w-5 h-5 dark:invert" />
             {getCartCount() > 0 && (
-              <span className="absolute -top-2 -right-2 bg-[#00308F] text-white text-xs font-bold rounded-full h-5 w-5 flex items-center justify-center">
+              <span className="absolute top-0.5 right-0.5 bg-stone-900 dark:bg-amber-600 text-white text-[10px] font-bold rounded-full h-4 w-4 flex items-center justify-center shadow-sm">
                 {getCartCount()}
               </span>
             )}
           </button>
 
-          {/* Profile - Fixed: Added profile-button class for mobile click detection */}
+          {/* Profile */}
           <div
             className="relative group profile-button"
             onMouseEnter={() =>
@@ -224,7 +234,7 @@ const Navbar = () => {
             }
           >
             <button
-              className="rounded-full"
+              className="p-1 rounded-full cursor-pointer transition-transform duration-200 hover:scale-105"
               aria-label="Profile menu"
             >
               {user ? (
@@ -232,70 +242,72 @@ const Navbar = () => {
                   <img
                     src={`${user.profilePicture}?t=${Date.now()}`}
                     alt="Profile"
-                    className="w-8 h-8 rounded-full object-cover border-2 border-gray-300 hover:border-[#00308F] transition-colors"
+                    className="w-8 h-8 rounded-full object-cover border border-stone-300 dark:border-stone-700 shadow-sm"
                     onError={(e) =>
                       (e.target.src =
                         "https://via.placeholder.com/40?text=User")
                     }
                   />
                 ) : (
-                  <div className="w-8 h-8 rounded-full bg-[#00308F] flex items-center justify-center text-white font-semibold border-2 border-gray-300 hover:border-[#002570] transition-colors">
+                  <div className="w-8 h-8 rounded-full bg-stone-900 dark:bg-stone-100 text-stone-100 dark:text-stone-900 flex items-center justify-center text-xs font-semibold shadow-sm">
                     {getUserInitial()}
                   </div>
                 )
               ) : (
-                <FiUser className="w-6 h-6 text-gray-800" />
+                <div className="w-8 h-8 rounded-full bg-stone-100 dark:bg-stone-800 flex items-center justify-center text-stone-700 dark:text-stone-300 hover:text-amber-700">
+                  <FiUser className="w-4 h-4" />
+                </div>
               )}
             </button>
             <AnimatePresence>
               {(showProfileMenu || mobileMenuOpen) && (
                 <motion.div
-                  initial={{ opacity: 0, y: -10 }}
+                  initial={{ opacity: 0, y: -6 }}
                   animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, y: -10 }}
-                  transition={{ duration: 0.2 }}
-                  className="profile-menu absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg py-1 z-50 border border-gray-300"
+                  exit={{ opacity: 0, y: -6 }}
+                  transition={{ duration: 0.15 }}
+                  className="profile-menu absolute right-0 mt-2 w-52 bg-white/95 dark:bg-stone-900/95 backdrop-blur-md rounded-2xl shadow-xl py-1.5 z-50 border border-stone-200/80 dark:border-stone-800 text-stone-800 dark:text-stone-200"
                   onMouseEnter={() => setShowProfileMenu(true)}
                   onMouseLeave={handleProfileMouseLeave}
                 >
                   {user ? (
                     <>
-                      <div className="px-4 py-2 text-xs text-gray-500 border-b border-gray-200">
-                        Signed in as <strong>{user.name}</strong>
+                      <div className="px-4 py-2.5 text-xs text-stone-500 dark:text-stone-400 border-b border-stone-100 dark:border-stone-800">
+                        Signed in as <strong className="text-stone-800 dark:text-stone-200 block truncate">{user.name}</strong>
                         {user.authProvider === 'google' && (
-                          <span className="block text-green-600 text-xs">Google Account</span>
+                          <span className="inline-block mt-0.5 text-emerald-600 dark:text-emerald-400 text-[10px] font-medium tracking-wide">Google Account</span>
                         )}
                       </div>
                       <NavLink
                         to="/account"
-                        className="flex items-center px-4 py-2 text-sm text-gray-800 hover:bg-gray-100 transition-colors"
+                        className="flex items-center px-4 py-2 text-sm text-stone-700 dark:text-stone-300 hover:bg-stone-100/80 dark:hover:bg-stone-800/80 transition-colors"
                         onClick={() => {
                           setShowProfileMenu(false);
                           setMobileMenuOpen(false);
                         }}
                         aria-label="My Account"
                       >
-                        <FiUser className="w-4 h-4 mr-2" />
+                        <FiUser className="w-4 h-4 mr-2.5 text-stone-400" />
                         My Account
                       </NavLink>
                       <NavLink
                         to="/orders"
-                        className="flex items-center px-4 py-2 text-sm text-gray-800 hover:bg-gray-100 transition-colors"
+                        className="flex items-center px-4 py-2 text-sm text-stone-700 dark:text-stone-300 hover:bg-stone-100/80 dark:hover:bg-stone-800/80 transition-colors"
                         onClick={() => {
                           setShowProfileMenu(false);
                           setMobileMenuOpen(false);
                         }}
                         aria-label="My Orders"
                       >
-                        <FiShoppingBag className="w-4 h-4 mr-2" />
+                        <FiShoppingBag className="w-4 h-4 mr-2.5 text-stone-400" />
                         My Orders
                       </NavLink>
                       <button
                         onClick={handleLogout}
-                        className="flex items-center w-full text-left px-4 py-2 text-sm text-gray-800 hover:bg-gray-100 transition-colors"
+                        className="flex items-center w-full text-left px-4 py-2 text-sm text-red-600 dark:text-red-400 hover:bg-red-50 dark:hover:bg-red-950/30 transition-colors"
                         aria-label="Logout"
                       >
-                        <FiLogOut className="w-4 h-4 mr-2" />
+                        <FiLogOut className="w-4 h-4 mr-2.5" />
                         Logout
                       </button>
                     </>
@@ -303,19 +315,19 @@ const Navbar = () => {
                     <>
                       <NavLink
                         to="/login"
-                        className="flex items-center px-4 py-2 text-sm text-gray-800 hover:bg-gray-100 transition-colors"
+                        className="flex items-center px-4 py-2 text-sm text-stone-700 dark:text-stone-300 hover:bg-stone-100/80 dark:hover:bg-stone-800/80 transition-colors"
                         onClick={() => {
                           setShowProfileMenu(false);
                           setMobileMenuOpen(false);
                         }}
                         aria-label="Login"
                       >
-                        <FiUser className="w-4 h-4 mr-2" />
+                        <FiUser className="w-4 h-4 mr-2.5 text-stone-400" />
                         Login
                       </NavLink>
                       <NavLink
                         to="/register"
-                        className="flex items-center px-4 py-2 text-sm text-gray-800 hover:bg-gray-100 transition-colors"
+                        className="flex items-center px-4 py-2 text-sm text-stone-700 dark:text-stone-300 hover:bg-stone-100/80 dark:hover:bg-stone-800/80 transition-colors"
                         onClick={() => {
                           setShowProfileMenu(false);
                           setMobileMenuOpen(false);
@@ -334,11 +346,11 @@ const Navbar = () => {
 
           {/* Mobile Menu Button */}
           <button
-            className="md:hidden flex items-center p-1"
+            className="md:hidden flex items-center p-2 rounded-lg text-stone-700 dark:text-stone-300 hover:bg-stone-100 dark:hover:bg-stone-800 transition-colors"
             onClick={() => setMobileMenuOpen(true)}
             aria-label="Toggle mobile menu"
           >
-            <FiMenu className="w-6 h-6 text-gray-800" />
+            <FiMenu className="w-6 h-6" />
           </button>
         </div>
       </nav>
@@ -352,8 +364,8 @@ const Navbar = () => {
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
-              transition={{ duration: 0.3 }}
-              className="fixed inset-0 z-50 bg-black/50 backdrop-blur-sm"
+              transition={{ duration: 0.2 }}
+              className="fixed inset-0 z-50 bg-stone-950/40 backdrop-blur-sm"
               onClick={() => setMobileMenuOpen(false)}
             />
 
@@ -363,112 +375,111 @@ const Navbar = () => {
               animate={{ x: 0 }}
               exit={{ x: "100%" }}
               transition={{ 
-                type: "spring", 
-                stiffness: 300, 
-                damping: 30,
-                mass: 0.8
+                type: "tween", 
+                duration: 0.25,
+                ease: "easeOut"
               }}
-              className="fixed right-0 top-0 h-full w-80 max-w-[85vw] bg-gradient-to-b from-white to-gray-50 shadow-2xl z-50 flex flex-col"
+              className="fixed right-0 top-0 h-full w-80 max-w-[85vw] bg-[#FAF7F2] dark:bg-[#151619] shadow-2xl z-50 flex flex-col border-l border-stone-200 dark:border-stone-800 text-stone-800 dark:text-stone-200"
             >
               {/* Header with Close Button */}
-              <div className="flex justify-between items-center p-6 border-b border-gray-300 bg-white">
+              <div className="flex justify-between items-center p-5 border-b border-stone-200 dark:border-stone-800">
                 <div className="flex items-center">
                   <img
                     src="/logo.png"
                     alt="Hadi Books Store"
                     className="w-10 h-10 mr-3"
                   />
-                  <h3 className="text-xl font-bold text-gray-800">Menu</h3>
+                  <h3 className="text-lg font-serif font-bold text-stone-900 dark:text-stone-100">Menu</h3>
                 </div>
                 <button
                   onClick={() => setMobileMenuOpen(false)}
-                  className="p-2 rounded-full hover:bg-gray-100 transition duration-200"
+                  className="p-2 rounded-full hover:bg-stone-200/60 dark:hover:bg-stone-800 transition duration-150"
                   aria-label="Close menu"
                 >
-                  <FiX className="w-6 h-6 text-gray-800" />
+                  <FiX className="w-5 h-5 text-stone-600 dark:text-stone-300" />
                 </button>
               </div>
 
               {/* Scrollable Content */}
-              <div className="flex-1 overflow-y-auto p-6">
+              <div className="flex-1 overflow-y-auto p-5">
                 {/* Navigation Links */}
-                <div className="space-y-3 mb-8">
-                  <h4 className="text-sm font-semibold text-gray-500 uppercase tracking-wider mb-4">
-                    Navigation
+                <div className="space-y-1.5 mb-8">
+                  <h4 className="text-[11px] font-semibold text-stone-400 dark:text-stone-500 uppercase tracking-widest mb-3">
+                    Explore
                   </h4>
-                  {menuItems.map((item, index) => (
+                  {menuItems.map((item) => (
                     <NavLink
                       key={item.path}
                       to={item.path}
                       className={({ isActive }) =>
-                        `flex items-center w-full px-4 py-3 rounded-xl transition-all duration-200 ${
+                        `flex items-center w-full px-4 py-2.5 rounded-xl transition-all duration-150 ${
                           isActive
-                            ? "bg-gradient-to-r from-blue-50 to-gray-50 text-[#00308F] shadow-sm border border-gray-300"
-                            : "text-gray-800 hover:bg-gray-50 hover:text-gray-900"
+                            ? "bg-amber-600/10 text-amber-800 dark:text-amber-400 font-semibold border border-amber-600/20"
+                            : "text-stone-700 dark:text-stone-300 hover:bg-stone-100 dark:hover:bg-stone-800/60"
                         }`
                       }
                       onClick={() => setMobileMenuOpen(false)}
                     >
-                      <span className="mr-3 text-[#00308F]">{item.icon}</span>
-                      <span className="font-medium">{item.label}</span>
+                      <span className="mr-3 text-stone-500 dark:text-stone-400">{item.icon}</span>
+                      <span className="text-sm font-medium tracking-wide">{item.label}</span>
                     </NavLink>
                   ))}
                 </div>
 
                 {/* User Section */}
-                <div className="space-y-3 border-t pt-6">
-                  <h4 className="text-sm font-semibold text-gray-500 uppercase tracking-wider mb-4">
+                <div className="space-y-1.5 border-t border-stone-200 dark:border-stone-800 pt-5">
+                  <h4 className="text-[11px] font-semibold text-stone-400 dark:text-stone-500 uppercase tracking-widest mb-3">
                     Account
                   </h4>
                   {user ? (
                     <>
-                      <div className="px-4 py-2 text-xs text-gray-500 border-b border-gray-200 mb-2">
-                        Signed in as <strong>{user.name}</strong>
+                      <div className="px-4 py-2 text-xs text-stone-500 dark:text-stone-400 border-b border-stone-200/60 dark:border-stone-800 mb-2">
+                        Signed in as <strong className="text-stone-900 dark:text-stone-100 block truncate">{user.name}</strong>
                         {user.authProvider === 'google' && (
-                          <span className="block text-green-600 text-xs">Google Account</span>
+                          <span className="inline-block mt-0.5 text-emerald-600 dark:text-emerald-400 text-[10px]">Google Account</span>
                         )}
                       </div>
                       <NavLink
                         to="/account"
-                        className="flex items-center w-full px-4 py-3 rounded-xl text-gray-800 hover:bg-gray-50 transition duration-200"
+                        className="flex items-center w-full px-4 py-2.5 rounded-xl text-stone-700 dark:text-stone-300 hover:bg-stone-100 dark:hover:bg-stone-800 transition duration-150"
                         onClick={() => setMobileMenuOpen(false)}
                       >
-                        <FiUser className="w-5 h-5 mr-3 text-[#00308F]" />
-                        <span className="font-medium">My Account</span>
+                        <FiUser className="w-4 h-4 mr-3 text-stone-400" />
+                        <span className="text-sm font-medium">My Account</span>
                       </NavLink>
                       <NavLink
                         to="/orders"
-                        className="flex items-center w-full px-4 py-3 rounded-xl text-gray-800 hover:bg-gray-50 transition duration-200"
+                        className="flex items-center w-full px-4 py-2.5 rounded-xl text-stone-700 dark:text-stone-300 hover:bg-stone-100 dark:hover:bg-stone-800 transition duration-150"
                         onClick={() => setMobileMenuOpen(false)}
                       >
-                        <FiShoppingBag className="w-5 h-5 mr-3 text-[#00308F]" />
-                        <span className="font-medium">My Orders</span>
+                        <FiShoppingBag className="w-4 h-4 mr-3 text-stone-400" />
+                        <span className="text-sm font-medium">My Orders</span>
                       </NavLink>
                       <button
                         onClick={handleLogout}
-                        className="flex items-center w-full px-4 py-3 rounded-xl text-gray-800 hover:bg-gray-50 transition duration-200"
+                        className="flex items-center w-full px-4 py-2.5 rounded-xl text-red-600 dark:text-red-400 hover:bg-red-50 dark:hover:bg-red-950/30 transition duration-150"
                       >
-                        <FiLogOut className="w-5 h-5 mr-3 text-[#00308F]" />
-                        <span className="font-medium">Logout</span>
+                        <FiLogOut className="w-4 h-4 mr-3" />
+                        <span className="text-sm font-medium">Logout</span>
                       </button>
                     </>
                   ) : (
                     <>
                       <NavLink
                         to="/login"
-                        className="flex items-center w-full px-4 py-3 rounded-xl text-gray-800 hover:bg-gray-50 transition duration-200"
+                        className="flex items-center w-full px-4 py-2.5 rounded-xl text-stone-700 dark:text-stone-300 hover:bg-stone-100 dark:hover:bg-stone-800 transition duration-150"
                         onClick={() => setMobileMenuOpen(false)}
                       >
-                        <FiUser className="w-5 h-5 mr-3 text-[#00308F]" />
-                        <span className="font-medium">Login</span>
+                        <FiUser className="w-4 h-4 mr-3 text-stone-400" />
+                        <span className="text-sm font-medium">Login</span>
                       </NavLink>
                       <NavLink
                         to="/register"
-                        className="flex items-center w-full px-4 py-3 rounded-xl text-gray-800 hover:bg-gray-50 transition duration-200"
+                        className="flex items-center w-full px-4 py-2.5 rounded-xl text-stone-700 dark:text-stone-300 hover:bg-stone-100 dark:hover:bg-stone-800 transition duration-150"
                         onClick={() => setMobileMenuOpen(false)}
                       >
-                        <FiUser className="w-5 h-5 mr-3 text-[#00308F]" />
-                        <span className="font-medium">Register</span>
+                        <FiUser className="w-4 h-4 mr-3 text-stone-400" />
+                        <span className="text-sm font-medium">Register</span>
                       </NavLink>
                     </>
                   )}
@@ -476,12 +487,12 @@ const Navbar = () => {
               </div>
 
               {/* Footer with WhatsApp */}
-              <div className="p-6 border-t border-gray-300 bg-white">
+              <div className="p-5 border-t border-stone-200 dark:border-stone-800">
                 <a
                   href="https://wa.me/923090005634"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="flex items-center justify-center w-full bg-green-500 text-white py-3 px-4 rounded-xl hover:bg-green-600 transition duration-200 font-medium"
+                  className="flex items-center justify-center w-full bg-emerald-600 text-white py-3 px-4 rounded-xl hover:bg-emerald-700 transition duration-150 font-medium text-sm shadow-sm"
                   onClick={() => setMobileMenuOpen(false)}
                 >
                   <img src={assets.whatsapp_icon} alt="WhatsApp" className="w-5 h-5 mr-2" />

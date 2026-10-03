@@ -168,14 +168,14 @@ const Product = () => {
       <motion.div
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
-        className="min-h-screen flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8 bg-gradient-to-r from-sky-100 via-orange-100 to-red-100"
+        className="min-h-screen flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8"
       >
-        <div className="bg-white rounded-xl shadow-md p-12 text-center">
-          <h3 className="text-xl font-medium text-gray-900 mb-2">Error</h3>
-          <p className="text-gray-800 mb-6">{error}</p>
+        <div className="bg-white dark:bg-stone-900 rounded-2xl border border-stone-200 dark:border-stone-800 shadow-md p-12 text-center max-w-md">
+          <h3 className="text-xl font-serif font-bold text-stone-900 dark:text-stone-100 mb-2">Error</h3>
+          <p className="text-stone-600 dark:text-stone-400 mb-6 text-sm">{error}</p>
           <button
             onClick={() => navigate("/collections")}
-            className="px-6 py-3 bg-[#00308F] text-white rounded-lg hover:bg-[#002570] transition-colors"
+            className="px-6 py-2.5 bg-stone-900 dark:bg-amber-600 text-white rounded-full text-xs uppercase tracking-widest font-medium hover:bg-stone-800 transition-colors"
           >
             Browse Collections
           </button>
@@ -190,11 +190,11 @@ const Product = () => {
       <motion.div
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
-        className="min-h-screen flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8 bg-gradient-to-r from-sky-100 via-orange-100 to-red-100"
+        className="min-h-screen flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8"
       >
         <div className="text-center">
-          <div className="inline-block w-8 h-8 border-4 border-gray-200 border-t-[#00308F] rounded-full animate-spin"></div>
-          <p className="text-gray-800 mt-2">Loading product...</p>
+          <div className="inline-block w-9 h-9 border-2 border-stone-300 dark:border-stone-700 border-t-amber-600 rounded-full animate-spin"></div>
+          <p className="text-stone-500 dark:text-stone-400 text-xs tracking-wider uppercase mt-3">Loading edition...</p>
         </div>
       </motion.div>
     );
@@ -206,18 +206,18 @@ const Product = () => {
       <motion.div
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
-        className="min-h-screen flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8 bg-gradient-to-r from-sky-100 via-orange-100 to-red-100"
+        className="min-h-screen flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8"
       >
-        <div className="bg-white rounded-xl shadow-md p-12 text-center">
-          <h3 className="text-xl font-medium text-gray-900 mb-2">
+        <div className="bg-white dark:bg-stone-900 rounded-2xl border border-stone-200 dark:border-stone-800 shadow-md p-12 text-center max-w-md">
+          <h3 className="text-xl font-serif font-bold text-stone-900 dark:text-stone-100 mb-2">
             Product Not Found
           </h3>
-          <p className="text-gray-800 mb-6">
-            The product you’re looking for is not available.
+          <p className="text-stone-600 dark:text-stone-400 mb-6 text-sm">
+            The edition you’re looking for is not currently in our catalog.
           </p>
           <button
             onClick={() => navigate("/collections")}
-            className="px-6 py-3 bg-[#00308F] text-white rounded-lg hover:bg-[#002570] transition-colors"
+            className="px-6 py-2.5 bg-stone-900 dark:bg-amber-600 text-white rounded-full text-xs uppercase tracking-widest font-medium hover:bg-stone-800 transition-colors"
           >
             Browse Collections
           </button>
@@ -230,7 +230,8 @@ const Product = () => {
     <motion.div
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
-      className="min-h-screen py-12 px-4 sm:px-6 lg:px-8 bg-gradient-to-r from-sky-100 via-orange-100 to-red-100 font-['Poppins',sans-serif]"
+      transition={{ duration: 0.25 }}
+      className="min-h-screen py-12 px-4 sm:px-6 lg:px-8"
     >
       <div className="max-w-6xl mx-auto">
         {/* Breadcrumbs */}

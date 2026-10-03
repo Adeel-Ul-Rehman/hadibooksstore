@@ -11,8 +11,8 @@ const Home = () => {
     <motion.div
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
-      transition={{ duration: 0.5 }}
-      className="min-h-screen bg-gradient-to-r from-sky-100 via-orange-100 to-red-100"
+      transition={{ duration: 0.25, ease: "easeOut" }}
+      className="min-h-screen bg-[#FAF7F2] dark:bg-[#111215]"
     >
       <div className="flex flex-col space-y-8 md:space-y-10 lg:space-y-12">
         <Hero />

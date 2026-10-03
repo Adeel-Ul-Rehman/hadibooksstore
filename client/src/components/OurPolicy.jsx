@@ -7,88 +7,71 @@ const OurPolicy = () => {
   const policies = [
     {
       icon: assets.exchange_icon,
-      title: "Easy Exchange Policy",
-      description: "Hassle-free exchanges within 7 days for your convenience.",
+      title: "Seamless Exchange",
+      description: "Hassle-free exchanges within 7 days on all titles.",
+      badge: "7-Day Window"
     },
     {
       icon: assets.quality_icon,
-      title: "7 Days Return Policy",
-      description: "Return products within 7 days for a full refund.",
+      title: "Guaranteed Authenticity",
+      description: "100% genuine publisher prints, verified and pristine.",
+      badge: "Quality Assured"
     },
     {
       icon: assets.support_img,
-      title: "Best Customer Support",
-      description: "24/7 support to assist you with any queries.",
+      title: "Dedicated Reader Support",
+      description: "Expert assistance available 24/7 for all inquiries.",
+      badge: "Always Available"
     },
   ];
 
-  const sectionVariants = {
-    hidden: { opacity: 0, y: 50 },
-    visible: { opacity: 1, y: 0, transition: { duration: 0.8, ease: "easeOut" } }
-  };
-
-  const cardVariants = {
-    hidden: { opacity: 0, scale: 0.95, rotate: -5 },
-    visible: { opacity: 1, scale: 1, rotate: 0, transition: { duration: 0.5 } },
-    hover: { scale: 1.05, rotate: 2, transition: { duration: 0.3 } }
-  };
-
   return (
-    <motion.section
-      variants={sectionVariants}
-      initial="hidden"
-      whileInView="visible"
-      viewport={{ once: true, amount: 0.2 }}
-      className="py-8 px-4 sm:px-6 lg:px-8"
-    >
-      <div className="max-w-7xl mx-auto text-center">
-        <Title text1={"OUR"} text2={"POLICIES"} />
-        <motion.p
-          initial={{ y: 20, opacity: 0 }}
-          whileInView={{ y: 0, opacity: 1 }}
-          viewport={{ once: true }}
-          transition={{ delay: 0.2, duration: 0.8, ease: "easeOut" }}
-          className="mt-2 text-sm sm:text-base text-gray-600 font-medium max-w-2xl mx-auto italic tracking-wide"
-        >
-          Shop with confidence with our customer-focused policies.
-        </motion.p>
+    <section className="py-16 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
+      <div className="text-center mb-10">
+        <Title text1={"OUR"} text2={"PROMISE"} />
+        <p className="mt-2 text-xs sm:text-sm text-stone-500 dark:text-stone-400 font-normal max-w-xl mx-auto tracking-wide">
+          Curated literature backed by reader-first standards and reliable service.
+        </p>
       </div>
-      <motion.div
-        className="mt-6 max-w-7xl mx-auto grid grid-cols-1 sm:grid-cols-3 gap-4 sm:gap-6"
-        initial="hidden"
-        whileInView="visible"
-        viewport={{ once: true, amount: 0.3 }}
-        variants={{
-          visible: { transition: { staggerChildren: 0.2 } }
-        }}
-      >
+
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
         {policies.map((policy, index) => (
           <motion.div
             key={index}
-            variants={cardVariants}
-            whileHover="hover"
-            whileInView="visible"
-            viewport={{ once: true }}
-            className="flex flex-col items-center text-center p-4 sm:p-5 bg-white rounded-xl shadow-sm hover:shadow-md transition-all duration-300 border border-gray-100"
+            initial={{ opacity: 0, y: 15 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, amount: 0.2 }}
+            transition={{ duration: 0.25, delay: index * 0.08, ease: "easeOut" }}
+            whileHover={{ y: -4 }}
+            className="group relative flex flex-col items-center text-center p-7 bg-white dark:bg-[#16171b] rounded-2xl border border-stone-200/90 dark:border-stone-800 shadow-[0_2px_12px_-2px_rgba(28,25,23,0.03)] hover:shadow-lg hover:border-amber-600/30 dark:hover:border-amber-500/30 transition-all duration-200"
           >
-            <img
-              src={policy.icon}
-              alt={policy.title}
-              className="w-14 h-14 sm:w-16 sm:h-16 mb-4 hover:scale-110 transition-transform duration-300"
-              onError={(e) => {
-                e.target.src = 'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="%23A1A1AA" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"%3E%3Crect x="3" y="3" width="18" height="18" rx="2" ry="2"/%3E%3Ccircle cx="8.5" cy="8.5" r="1.5"/%3E%3Cpolyline points="21 15 16 10 5 21"/%3E%3C/svg%3E';
-              }}
-            />
-            <h3 className="text-base sm:text-lg font-semibold text-gray-800">
+            {/* Top Pill */}
+            <span className="mb-5 text-[10px] uppercase tracking-widest font-semibold text-amber-700 dark:text-amber-400 bg-amber-50 dark:bg-amber-950/40 border border-amber-200/60 dark:border-amber-900/40 px-3 py-1 rounded-full">
+              {policy.badge}
+            </span>
+
+            {/* Icon Container */}
+            <div className="w-14 h-14 rounded-2xl bg-[#faf7f2] dark:bg-stone-800 flex items-center justify-center mb-5 group-hover:scale-105 transition-transform duration-200 shadow-inner">
+              <img
+                src={policy.icon}
+                alt={policy.title}
+                className="w-7 h-7 object-contain opacity-90 group-hover:opacity-100"
+                onError={(e) => {
+                  e.target.src = 'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="%23A1A1AA" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"%3E%3Crect x="3" y="3" width="18" height="18" rx="2" ry="2"/%3E%3Ccircle cx="8.5" cy="8.5" r="1.5"/%3E%3Cpolyline points="21 15 16 10 5 21"/%3E%3C/svg%3E';
+                }}
+              />
+            </div>
+
+            <h3 className="text-base font-serif font-bold text-stone-900 dark:text-stone-100 mb-2">
               {policy.title}
             </h3>
-            <p className="mt-1 text-sm text-gray-600 font-medium">
+            <p className="text-xs sm:text-sm text-stone-500 dark:text-stone-400 leading-relaxed font-sans-clean">
               {policy.description}
             </p>
           </motion.div>
         ))}
-      </motion.div>
-    </motion.section>
+      </div>
+    </section>
   );  
 };
 

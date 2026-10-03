@@ -105,7 +105,8 @@ const Login = () => {
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
-      className="min-h-screen bg-gradient-to-r from-sky-100 via-orange-100 to-red-100 flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8 font-['Poppins',sans-serif]"
+      transition={{ duration: 0.25 }}
+      className="min-h-screen flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8"
     >
       <div className="max-w-md w-full space-y-8">
         <motion.div

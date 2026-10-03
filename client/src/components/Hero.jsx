@@ -1,8 +1,7 @@
 import React, { useContext, useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Link } from "react-router-dom";
-import { ChevronLeft, ChevronRight } from "lucide-react";
-import { ShopContext } from "../context/ShopContext";
+import { ChevronLeft, ChevronRight, BookOpen, Sparkles, ShieldCheck, ArrowRight } from "lucide-react";
 import { AppContext } from "../context/AppContext";
 
 const Hero = () => {
@@ -10,22 +9,19 @@ const Hero = () => {
   const [heroImages, setHeroImages] = useState([]);
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const [loading, setLoading] = useState(true);
-  const [error, setError] = useState("");
 
   // Fetch hero images from backend
   useEffect(() => {
     const fetchHeroImages = async () => {
       try {
-        const data = await apiRequest('get', '/api/hero/');
-        if (data.success) {
-          setHeroImages(data.data || []);
+        const data = await apiRequest("get", "/api/hero/");
+        if (data.success && Array.isArray(data.data) && data.data.length > 0) {
+          setHeroImages(data.data);
         } else {
-          setError(data.message || "Failed to fetch hero images");
           setHeroImages([]);
         }
       } catch (error) {
         console.error("Fetch Hero Images Error:", error);
-        setError("Failed to fetch hero images");
         setHeroImages([]);
       } finally {
         setLoading(false);
@@ -35,18 +31,17 @@ const Hero = () => {
     fetchHeroImages();
   }, [apiRequest]);
 
-  // Automatic image change
+  // Automatic image slide
   useEffect(() => {
     if (heroImages.length <= 1) return;
 
     const interval = setInterval(() => {
       setCurrentImageIndex((prevIndex) => (prevIndex + 1) % heroImages.length);
-    }, 5000);
+    }, 5500);
 
     return () => clearInterval(interval);
   }, [heroImages.length]);
 
-  // Navigation functions
   const goToPrevious = () => {
     setCurrentImageIndex((prevIndex) =>
       prevIndex === 0 ? heroImages.length - 1 : prevIndex - 1
@@ -57,204 +52,181 @@ const Hero = () => {
     setCurrentImageIndex((prevIndex) => (prevIndex + 1) % heroImages.length);
   };
 
-  const reelVariants = {
-    initial: { opacity: 0, x: 100 },
-    animate: { opacity: 1, x: 0 },
-    exit: { opacity: 0, x: -100 },
-  };
-
-  // Fallback hero images if API fails
   const fallbackImages = [
     {
-      imageUrl: "https://images.unsplash.com/photo-1544947950-fa07a98d237f?w=600&h=400&fit=crop",
-      altText: "Book Collection"
+      imageUrl: "https://images.unsplash.com/photo-1544947950-fa07a98d237f?w=800&q=80&auto=format&fit=crop",
+      altText: "Curated Classical Literature",
     },
     {
-      imageUrl: "https://images.unsplash.com/photo-1532012197267-da84d127e765?w=600&h=400&fit=crop",
-      altText: "Reading Books"
+      imageUrl: "https://images.unsplash.com/photo-1512820790803-83ca734da794?w=800&q=80&auto=format&fit=crop",
+      altText: "Bestselling Books Collection",
+    },
+    {
+      imageUrl: "https://images.unsplash.com/photo-1532012197267-da84d127e765?w=800&q=80&auto=format&fit=crop",
+      altText: "Academic and Fiction Editions",
     }
   ];
 
   const displayImages = heroImages.length > 0 ? heroImages : fallbackImages;
 
   return (
-    <motion.div 
-      initial={{ opacity: 0, y: 50 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, amount: 0.3 }}
-      transition={{ duration: 0.8, ease: "easeOut" }}
-      className="relative overflow-hidden bg-gradient-to-r from-sky-100 via-orange-100 to-red-100 min-h-[500px] flex items-center py-8 px-4 sm:py-12 sm:px-6 lg:px-8"
-    >
-      <div className="max-w-7xl mx-auto w-full">
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
+    <section className="relative overflow-hidden bg-gradient-to-br from-[#FAF7F2] via-[#F4EFEA] to-[#EAE2D8] dark:from-[#131417] dark:via-[#18191E] dark:to-[#111215] border-b border-[#EAE4DC] dark:border-[#26272F] transition-colors duration-200">
+      {/* Subtle Warm Atmospheric Glows */}
+      <div className="absolute top-0 right-1/4 w-96 h-96 bg-amber-200/25 dark:bg-amber-900/10 rounded-full blur-3xl pointer-events-none" />
+      <div className="absolute bottom-0 left-10 w-80 h-80 bg-orange-200/20 dark:bg-stone-800/30 rounded-full blur-3xl pointer-events-none" />
+
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 sm:py-16 lg:py-20 relative z-10">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
+          
+          {/* Left Column: Editorial Headline & Copy */}
           <motion.div
-            initial={{ opacity: 0, x: -50 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true, amount: 0.5 }}
-            transition={{ duration: 0.8, delay: 0.2, ease: "easeOut" }}
-            className="flex flex-col justify-center space-y-4 sm:space-y-6 md:space-y-8 text-center md:text-left"
+            initial={{ opacity: 0, y: 15 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.35, ease: "easeOut" }}
+            className="lg:col-span-7 flex flex-col text-center lg:text-left space-y-5 sm:space-y-6"
           >
-            <motion.h1
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.8, delay: 0.4, ease: "easeOut" }}
-              className="text-2xl sm:text-3xl md:text-5xl lg:text-6xl font-bold text-gray-900 leading-snug sm:leading-tight"
-            >
-              Discover Your Next <br className="hidden sm:block" />
-              <span className="text-[#00308F]">Favorite Book</span>
-            </motion.h1>
+            {/* Pill Badge */}
+            <div className="inline-flex items-center justify-center lg:justify-start">
+              <span className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full text-xs font-medium tracking-wide bg-amber-100/80 dark:bg-amber-950/60 text-amber-900 dark:text-amber-200 border border-amber-300/60 dark:border-amber-800/60 shadow-xs">
+                <Sparkles className="w-3.5 h-3.5 text-amber-600 dark:text-amber-400" />
+                Curated Editions & Timeless Literature
+              </span>
+            </div>
 
-            <motion.p
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.8, delay: 0.6, ease: "easeOut" }}
-              className="text-sm sm:text-base md:text-lg lg:text-xl text-gray-600 max-w-lg mx-auto md:mx-0 px-2 sm:px-0"
-            >
-              We offer both{" "}
-              <span className="font-semibold text-gray-800">new</span> and
-              <span className="font-semibold text-gray-800"> used books</span> at
-              <span className="text-[#00308F] font-semibold"> affordable prices</span>.
-              Discover bestsellers, hidden gems, and second-hand treasures — all in one place, making reading accessible for everyone.
-            </motion.p>
+            {/* Editorial Heading */}
+            <h1 className="font-editorial text-3xl sm:text-5xl lg:text-6xl font-normal text-stone-900 dark:text-stone-50 tracking-tight leading-[1.15]">
+              Stories That Expand <br className="hidden sm:inline" />
+              <span className="italic text-amber-800 dark:text-amber-400">
+                Your Horizons.
+              </span>
+            </h1>
 
-            <motion.div 
-              initial={{ opacity: 0, scale: 0.95 }}
-              whileInView={{ opacity: 1, scale: 1 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.8, delay: 0.8, ease: "easeOut" }}
-              className="block md:hidden my-4"
-            >
-              <div className="relative flex justify-center items-center h-full">
-                <div className="relative w-full h-[250px] rounded-xl shadow-xl border-4 border-white overflow-hidden">
+            {/* Description */}
+            <p className="text-sm sm:text-base lg:text-lg text-stone-600 dark:text-stone-300 max-w-xl mx-auto lg:mx-0 font-normal leading-relaxed">
+              Explore curated bestsellers, timeless classics, and hard-to-find secondhand gems. Every book is inspected for quality, packed with care, and delivered right to your doorstep.
+            </p>
+
+            {/* CTAs */}
+            <div className="pt-2 flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-3.5 sm:gap-4">
+              <Link
+                to="/collections"
+                className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-7 py-3.5 rounded-lg bg-stone-900 hover:bg-stone-800 dark:bg-stone-100 dark:hover:bg-white text-white dark:text-stone-900 text-sm font-semibold shadow-sm hover:shadow-md transition-all duration-200 cursor-pointer"
+              >
+                <span>Explore Catalog</span>
+                <ArrowRight className="w-4 h-4" />
+              </Link>
+              <Link
+                to="/about"
+                className="w-full sm:w-auto inline-flex items-center justify-center px-7 py-3.5 rounded-lg border border-stone-300 dark:border-stone-700 bg-white/60 dark:bg-stone-900/60 hover:bg-white dark:hover:bg-stone-800 text-stone-800 dark:text-stone-200 text-sm font-semibold transition-all duration-200 cursor-pointer"
+              >
+                Our Story
+              </Link>
+            </div>
+
+            {/* Trust Highlights */}
+            <div className="pt-4 border-t border-stone-200/80 dark:border-stone-800/80 grid grid-cols-3 gap-3 text-center sm:text-left">
+              <div className="flex items-center gap-2 justify-center sm:justify-start">
+                <BookOpen className="w-4 h-4 text-amber-700 dark:text-amber-400 shrink-0" />
+                <span className="text-xs font-medium text-stone-700 dark:text-stone-300">
+                  New & Pre-loved
+                </span>
+              </div>
+              <div className="flex items-center gap-2 justify-center sm:justify-start">
+                <ShieldCheck className="w-4 h-4 text-amber-700 dark:text-amber-400 shrink-0" />
+                <span className="text-xs font-medium text-stone-700 dark:text-stone-300">
+                  Quality Guaranteed
+                </span>
+              </div>
+              <div className="flex items-center gap-2 justify-center sm:justify-start">
+                <span className="text-amber-600 dark:text-amber-400 font-serif text-sm">★</span>
+                <span className="text-xs font-medium text-stone-700 dark:text-stone-300">
+                  4.9/5 · 10k+ Readers
+                </span>
+              </div>
+            </div>
+          </motion.div>
+
+          {/* Right Column: Book Showcase Card */}
+          <motion.div
+            initial={{ opacity: 0, scale: 0.98 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 0.35, delay: 0.1, ease: "easeOut" }}
+            className="lg:col-span-5 relative"
+          >
+            <div className="relative mx-auto max-w-md lg:max-w-none">
+              {/* Glass Frame Container */}
+              <div className="relative rounded-2xl p-2.5 sm:p-3 bg-white/80 dark:bg-stone-900/80 border border-stone-200/80 dark:border-stone-800 backdrop-blur-md shadow-xl shadow-stone-900/5">
+                <div className="relative w-full h-[280px] sm:h-[380px] rounded-xl overflow-hidden bg-stone-100 dark:bg-stone-800">
                   {loading ? (
-                    <div className="flex items-center justify-center h-full bg-gray-200">
-                      <svg className="animate-spin h-10 w-10 text-orange-500" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-                        <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
-                        <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
-                      </svg>
+                    <div className="flex items-center justify-center h-full">
+                      <div className="w-8 h-8 border-2 border-amber-600 border-t-transparent rounded-full animate-spin" />
                     </div>
                   ) : (
-                    <AnimatePresence initial={false}>
+                    <AnimatePresence mode="wait">
                       <motion.img
                         key={currentImageIndex}
                         src={displayImages[currentImageIndex]?.imageUrl || fallbackImages[0].imageUrl}
-                        alt={displayImages[currentImageIndex]?.altText || "Book Collection"}
-                        className="w-full h-full object-cover absolute top-0 left-0"
-                        variants={reelVariants}
-                        initial="initial"
-                        animate="animate"
-                        exit="exit"
-                        transition={{ duration: 0.6, ease: "easeInOut" }}
-                        loading="lazy"
-                        onError={(e) => { e.target.src = fallbackImages[0].imageUrl; }}
+                        alt={displayImages[currentImageIndex]?.altText || "Featured Book Collection"}
+                        className="w-full h-full object-cover"
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                        exit={{ opacity: 0 }}
+                        transition={{ duration: 0.25, ease: "easeOut" }}
+                        loading="eager"
+                        onError={(e) => {
+                          e.target.src = fallbackImages[0].imageUrl;
+                        }}
                       />
                     </AnimatePresence>
                   )}
-                  {displayImages.length > 0 && (
-                    <div className="absolute bottom-2 right-2 bg-white p-2 rounded-lg shadow-md text-xs">
-                      <div className="font-medium text-gray-900">Bestsellers</div>
-                      <div className="text-gray-500">{displayImages.length} Titles</div>
+
+                  {/* Gradient Overlay for Text Readability */}
+                  <div className="absolute inset-0 bg-gradient-to-t from-stone-950/70 via-transparent to-transparent pointer-events-none" />
+
+                  {/* Floating Edition Tag */}
+                  <div className="absolute bottom-3.5 left-3.5 right-3.5 flex items-center justify-between text-white">
+                    <div>
+                      <p className="text-xs uppercase tracking-wider text-amber-300 font-semibold">
+                        Spotlight Edition
+                      </p>
+                      <p className="text-sm sm:text-base font-editorial font-medium truncate">
+                        {displayImages[currentImageIndex]?.altText || "Curated Literary Works"}
+                      </p>
                     </div>
-                  )}
+                    {displayImages.length > 1 && (
+                      <span className="text-xs bg-black/40 backdrop-blur-md px-2 py-1 rounded-md text-stone-200 font-mono">
+                        {currentImageIndex + 1}/{displayImages.length}
+                      </span>
+                    )}
+                  </div>
+
+                  {/* Snappy Minimal Navigation Arrows */}
                   {displayImages.length > 1 && (
                     <>
-                      <button onClick={goToPrevious} className="absolute left-2 top-1/2 transform -translate-y-1/2 bg-white p-1 rounded-full shadow-md hover:bg-gray-100 transition-all duration-300 z-10" aria-label="Previous book">
-                        <ChevronLeft className="w-5 h-5 text-gray-800" />
+                      <button
+                        onClick={goToPrevious}
+                        className="absolute left-2.5 top-1/2 -translate-y-1/2 w-8 h-8 rounded-full bg-white/80 dark:bg-stone-900/80 hover:bg-white text-stone-800 dark:text-stone-100 flex items-center justify-center shadow-md backdrop-blur-sm transition-transform duration-150 active:scale-95 cursor-pointer z-10"
+                        aria-label="Previous image"
+                      >
+                        <ChevronLeft className="w-4 h-4" />
                       </button>
-                      <button onClick={goToNext} className="absolute right-2 top-1/2 transform -translate-y-1/2 bg-white p-1 rounded-full shadow-md hover:bg-gray-100 transition-all duration-300 z-10" aria-label="Next book">
-                        <ChevronRight className="w-5 h-5 text-gray-800" />
+                      <button
+                        onClick={goToNext}
+                        className="absolute right-2.5 top-1/2 -translate-y-1/2 w-8 h-8 rounded-full bg-white/80 dark:bg-stone-900/80 hover:bg-white text-stone-800 dark:text-stone-100 flex items-center justify-center shadow-md backdrop-blur-sm transition-transform duration-150 active:scale-95 cursor-pointer z-10"
+                        aria-label="Next image"
+                      >
+                        <ChevronRight className="w-4 h-4" />
                       </button>
                     </>
                   )}
                 </div>
               </div>
-            </motion.div>
-
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.8, delay: 1.0, ease: "easeOut" }}
-              className="flex flex-col sm:flex-row gap-4 justify-center md:justify-start"
-            >
-              <Link
-                to="/collections"
-                className="w-full sm:w-40 px-6 py-3 text-center bg-orange-500 text-white font-semibold rounded-lg shadow-md hover:bg-orange-600 transition-all duration-300 hover:shadow-lg"
-              >
-                Shop Now
-              </Link>
-              <Link
-                to="/about"
-                className="w-full sm:w-40 px-6 py-3 text-center bg-[#00308F] text-white font-semibold rounded-lg shadow-md hover:bg-[#002570] transition-all duration-300 hover:shadow-lg"
-              >
-                Learn More
-              </Link>
-            </motion.div>
-          </motion.div>
-
-          <motion.div 
-            initial={{ opacity: 0, x: 50 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.8, delay: 0.2, ease: "easeOut" }}
-            className="hidden md:block"
-          >
-            <div className="relative flex justify-center items-center h-full">
-              <div className="relative w-full h-[400px] rounded-xl shadow-xl border-4 border-white overflow-hidden">
-                {loading ? (
-                  <div className="flex items-center justify-center h-full bg-gray-200">
-                    <svg className="animate-spin h-12 w-12 text-[#00308F]" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-                      <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
-                      <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
-                    </svg>
-                  </div>
-                ) : (
-                  <AnimatePresence initial={false}>
-                    <motion.img
-                      key={currentImageIndex}
-                      src={displayImages[currentImageIndex]?.imageUrl || fallbackImages[0].imageUrl}
-                      alt={displayImages[currentImageIndex]?.altText || "Book Collection"}
-                      className="w-full h-full object-cover absolute top-0 left-0"
-                      variants={reelVariants}
-                      initial="initial"
-                      animate="animate"
-                      exit="exit"
-                      transition={{ duration: 0.6, ease: "easeInOut" }}
-                      loading="lazy"
-                      onError={(e) => { e.target.src = fallbackImages[0].imageUrl; }}
-                    />
-                  </AnimatePresence>
-                )}
-                {displayImages.length > 0 && (
-                  <div className="absolute bottom-4 right-4 bg-white p-3 rounded-lg shadow-md text-sm">
-                    <div className="font-medium text-gray-900">Bestsellers</div>
-                    <div className="text-gray-500">{displayImages.length} Titles</div>
-                  </div>
-                )}
-                {displayImages.length > 1 && (
-                  <>
-                    <button onClick={goToPrevious} className="absolute left-4 top-1/2 transform -translate-y-1/2 bg-white p-2 rounded-full shadow-md hover:bg-gray-100 transition-all duration-300 z-10" aria-label="Previous book">
-                      <ChevronLeft className="w-6 h-6 text-gray-800" />
-                    </button>
-                    <button onClick={goToNext} className="absolute right-4 top-1/2 transform -translate-y-1/2 bg-white p-2 rounded-full shadow-md hover:bg-gray-100 transition-all duration-300 z-10" aria-label="Next book">
-                      <ChevronRight className="w-6 h-6 text-gray-800" />
-                    </button>
-                  </>
-                )}
-              </div>
             </div>
           </motion.div>
+
         </div>
       </div>
-
-      <div className="absolute top-0 left-0 w-full h-full overflow-hidden pointer-events-none">
-        <div className="absolute top-0 right-0 w-40 sm:w-64 h-40 sm:h-64 bg-orange-100 rounded-full opacity-20 mix-blend-multiply filter blur-3xl animate-blob animation-delay-2000"></div>
-        <div className="absolute top-0 left-0 w-40 sm:w-64 h-40 sm:h-64 bg-sky-100 rounded-full opacity-20 mix-blend-multiply filter blur-3xl animate-blob animation-delay-4000"></div>
-        <div className="absolute bottom-0 right-0 w-40 sm:w-64 h-40 sm:h-64 bg-[#00308F] rounded-full opacity-20 mix-blend-multiply filter blur-3xl animate-blob"></div>
-      </div>
-    </motion.div>
+    </section>
   );
 };
 

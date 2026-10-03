@@ -239,7 +239,7 @@ const GuestCheckout = () => {
   };
 
   return (
-    <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.4 }} className="min-h-screen py-8 px-4 sm:px-6 bg-gradient-to-r from-sky-100 via-orange-100 to-red-100 font-['Poppins',sans-serif]">
+    <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.25 }} className="min-h-screen py-8 px-4 sm:px-6">
       <div className="max-w-7xl mx-auto">
         <Title text1="GUEST" text2="CHECKOUT" />
 

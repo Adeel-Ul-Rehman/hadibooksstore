@@ -109,7 +109,7 @@ const AppContent = () => {
   }, [location, isAuthenticated, fetchCart, fetchWishlist, syncAfterGoogleLogin]);
 
   return (
-    <div className="flex flex-col min-h-screen bg-gradient-to-r from-sky-50 via-orange-50 to-red-50 dark:from-gray-800 dark:via-gray-900 dark:to-black">
+    <div className="flex flex-col min-h-screen bg-[#FAF7F2] dark:bg-[#111215] text-stone-900 dark:text-stone-100 font-sans-clean transition-colors duration-200">
       <Navbar />
       <ScrollToTop />
       {/* ✅ full-width main, no extra empty space on sides */}

@@ -211,39 +211,20 @@ const Orders = () => {
       <motion.div
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
-        transition={{ duration: 0.5 }}
-        className="min-h-screen bg-gradient-to-r from-sky-100 via-orange-100 to-red-100 py-12 px-4 sm:px-6 lg:px-8 text-center"
+        transition={{ duration: 0.25 }}
+        className="min-h-screen py-12 px-4 sm:px-6 lg:px-8 text-center"
       >
         <Title text1="YOUR" text2="ORDERS" />
         <motion.div
-          initial={{ y: 20, opacity: 0 }}
+          initial={{ y: 15, opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}
-          transition={{ delay: 0.2 }}
+          transition={{ delay: 0.15 }}
           className="mt-8"
         >
           <div className="inline-flex items-center justify-center">
-            <svg
-              className="animate-spin h-6 w-6 sm:h-8 sm:w-8 text-[#00308F]"
-              xmlns="http://www.w3.org/2000/svg"
-              fill="none"
-              viewBox="0 0 24 24"
-            >
-              <circle
-                className="opacity-25"
-                cx="12"
-                cy="12"
-                r="10"
-                stroke="currentColor"
-                strokeWidth="4"
-              ></circle>
-              <path
-                className="opacity-75"
-                fill="currentColor"
-                d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
-              ></path>
-            </svg>
-            <span className="ml-3 text-gray-700 text-base sm:text-lg font-medium">
-              Loading...
+            <div className="w-8 h-8 border-2 border-stone-300 dark:border-stone-700 border-t-amber-600 rounded-full animate-spin" />
+            <span className="ml-3 text-stone-600 dark:text-stone-400 text-sm font-medium">
+              Loading orders...
             </span>
           </div>
         </motion.div>
@@ -256,18 +237,18 @@ const Orders = () => {
       <motion.div
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
-        transition={{ duration: 0.5 }}
-        className="min-h-screen bg-gradient-to-r from-sky-100 via-orange-100 to-red-100 py-12 px-4 sm:px-6 lg:px-8 text-center"
+        transition={{ duration: 0.25 }}
+        className="min-h-screen py-12 px-4 sm:px-6 lg:px-8 text-center"
       >
         <Title text1="YOUR" text2="ORDERS" />
         <motion.div
-          initial={{ y: 20, opacity: 0 }}
+          initial={{ y: 15, opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}
-          transition={{ delay: 0.2 }}
-          className="mt-8 bg-white rounded-xl shadow-md p-6 max-w-md mx-auto"
+          transition={{ delay: 0.15 }}
+          className="mt-8 bg-white dark:bg-stone-900 rounded-2xl border border-stone-200 dark:border-stone-800 shadow-md p-8 max-w-md mx-auto"
         >
           <svg
-            className="mx-auto h-12 w-12 sm:h-16 sm:w-16 text-gray-400"
+            className="mx-auto h-12 w-12 text-stone-400"
             fill="none"
             stroke="currentColor"
             viewBox="0 0 24 24"
@@ -279,22 +260,22 @@ const Orders = () => {
               d="M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
             />
           </svg>
-          <h3 className="mt-4 text-lg sm:text-xl font-semibold text-gray-900">
-            Please Log In
+          <h3 className="mt-4 text-lg font-serif font-bold text-stone-900 dark:text-stone-100">
+            Please Sign In
           </h3>
-          <p className="mt-2 text-gray-600 text-sm sm:text-base">
-            You need to log in or register to view your orders.
+          <p className="mt-1 text-stone-600 dark:text-stone-400 text-sm">
+            Sign in to view and track your literary purchases.
           </p>
-          <div className="mt-4 flex gap-4 justify-center">
+          <div className="mt-6 flex gap-3 justify-center">
             <Link
               to="/login?redirect=/orders"
-              className="px-4 py-2 sm:px-6 sm:py-3 bg-gradient-to-r from-red-400 to-orange-500 text-white font-semibold rounded-full shadow-md hover:from-red-500 hover:to-orange-600 transition-all duration-300 cursor-pointer text-sm sm:text-base"
+              className="px-5 py-2.5 bg-stone-900 hover:bg-stone-800 dark:bg-amber-600 dark:hover:bg-amber-500 text-white font-medium rounded-full text-xs uppercase tracking-widest transition-all"
             >
-              Log In
+              Sign In
             </Link>
             <Link
               to="/register?redirect=/orders"
-              className="px-4 py-2 sm:px-6 sm:py-3 bg-[#00308F] text-white font-semibold rounded-full shadow-md hover:bg-[#002266] transition-all duration-300 cursor-pointer text-sm sm:text-base"
+              className="px-5 py-2.5 border border-stone-300 dark:border-stone-700 text-stone-800 dark:text-stone-200 hover:border-amber-600 rounded-full text-xs uppercase tracking-widest font-medium transition-all"
             >
               Register
             </Link>
@@ -308,8 +289,8 @@ const Orders = () => {
     <motion.div
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
-      transition={{ duration: 0.5 }}
-      className="min-h-screen bg-gradient-to-r from-sky-100 via-orange-100 to-red-100 py-12 px-4 sm:px-6 lg:px-8"
+      transition={{ duration: 0.25 }}
+      className="min-h-screen py-12 px-4 sm:px-6 lg:px-8"
     >
       <div className="max-w-4xl mx-auto text-center">
         <Title text1="YOUR" text2="ORDERS" />

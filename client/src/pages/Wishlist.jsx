@@ -51,7 +51,7 @@ const Wishlist = () => {
       initial="hidden"
       whileInView="visible"
       viewport={{ once: true, amount: 0.2 }}
-      className="min-h-screen py-8 px-4 sm:px-6 bg-gradient-to-r from-sky-100 via-orange-100 to-red-100 font-['Poppins',sans-serif]"
+      className="min-h-screen py-8 px-4 sm:px-6"
     >
       <div className="max-w-7xl mx-auto">
         <motion.div 

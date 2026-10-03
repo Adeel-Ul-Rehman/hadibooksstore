@@ -354,8 +354,8 @@ const PlaceOrder = () => {
     <motion.div
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
-      transition={{ duration: 0.5 }}
-      className="min-h-screen py-8 px-4 sm:px-6 lg:px-8 bg-gradient-to-r from-sky-100 via-orange-100 to-red-100"
+      transition={{ duration: 0.25 }}
+      className="min-h-screen py-8 px-4 sm:px-6 lg:px-8"
       role="main"
       aria-label="Place Order Page"
     >

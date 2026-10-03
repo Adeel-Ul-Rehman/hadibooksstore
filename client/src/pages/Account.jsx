@@ -517,14 +517,14 @@ const Account = () => {
       <motion.div
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
-        className="min-h-screen bg-gradient-to-r from-sky-100 via-orange-100 to-red-100 flex items-center justify-center py-12 px-4"
+        className="min-h-screen flex items-center justify-center py-12 px-4"
       >
         <div className="text-center">
-          <div className="inline-block animate-spin rounded-full h-16 w-16 border-t-4 border-b-4 border-[#00308F] mb-4"></div>
-          <h2 className="text-2xl font-semibold text-gray-800 mb-2">
-            Completing Google Sign In...
+          <div className="inline-block animate-spin rounded-full h-12 w-12 border-2 border-stone-300 dark:border-stone-700 border-t-amber-600 mb-4"></div>
+          <h2 className="text-xl font-serif font-bold text-stone-900 dark:text-stone-100 mb-2">
+            Completing Google Authentication...
           </h2>
-          <p className="text-gray-600">Please wait while we set up your account</p>
+          <p className="text-stone-500 dark:text-stone-400 text-sm">Please wait while we connect your profile.</p>
         </div>
       </motion.div>
     );
@@ -535,18 +535,18 @@ const Account = () => {
       <motion.div
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
-        className="min-h-screen bg-gradient-to-r from-sky-100 via-orange-100 to-red-100 py-12 px-4 sm:px-6 lg:px-8 text-center"
+        className="min-h-screen py-12 px-4 sm:px-6 lg:px-8 text-center"
       >
         <div className="max-w-4xl mx-auto">
           <Title text1="ACCOUNT" text2="ACCESS" />
           <motion.div
-            initial={{ y: 20, opacity: 0 }}
+            initial={{ y: 15, opacity: 0 }}
             animate={{ y: 0, opacity: 1 }}
-            transition={{ delay: 0.2 }}
-            className="mt-8 bg-white rounded-xl shadow-md p-6 max-w-md mx-auto"
+            transition={{ delay: 0.15 }}
+            className="mt-8 bg-white dark:bg-stone-900 rounded-2xl border border-stone-200 dark:border-stone-800 shadow-md p-8 max-w-md mx-auto"
           >
             <svg
-              className="mx-auto h-12 w-12 sm:h-16 sm:w-16 text-gray-400"
+              className="mx-auto h-12 w-12 text-stone-400"
               fill="none"
               stroke="currentColor"
               viewBox="0 0 24 24"
@@ -558,35 +558,30 @@ const Account = () => {
                 d="M9.172 16.172a4 4 0 015.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
               />
             </svg>
-            <p className="mt-4 text-gray-600 text-sm sm:text-base">
+            <p className="mt-4 text-stone-600 dark:text-stone-400 text-sm">
               Please{" "}
               <a
                 href="/login"
-                className="text-red-500 hover:text-red-600 font-semibold transition-colors"
+                className="text-amber-700 dark:text-amber-400 font-semibold hover:underline"
               >
-                log in
+                sign in
               </a>{" "}
               to access your account.
             </p>
-            <motion.div
-              className="mt-6 flex flex-col sm:flex-row gap-3"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ delay: 0.4 }}
-            >
+            <div className="mt-6 flex flex-col sm:flex-row gap-3">
               <button
                 onClick={() => navigate("/login")}
-                className="w-full py-2 px-4 sm:px-6 sm:py-3 bg-[#00308F] text-white font-semibold rounded-lg shadow-sm hover:bg-[#002266] transition-all duration-300 cursor-pointer text-sm sm:text-base"
+                className="w-full py-2.5 px-5 bg-stone-900 hover:bg-stone-800 dark:bg-amber-600 dark:hover:bg-amber-500 text-white font-medium rounded-full text-xs uppercase tracking-widest transition-all cursor-pointer"
               >
                 Login
               </button>
               <button
                 onClick={() => navigate("/register")}
-                className="w-full py-2 px-4 sm:px-6 sm:py-3 bg-gradient-to-r from-red-400 to-orange-500 text-white font-semibold rounded-lg shadow-sm hover:from-red-500 hover:to-orange-600 transition-all duration-300 cursor-pointer text-sm sm:text-base"
+                className="w-full py-2.5 px-5 border border-stone-300 dark:border-stone-700 text-stone-800 dark:text-stone-200 hover:border-amber-600 font-medium rounded-full text-xs uppercase tracking-widest transition-all cursor-pointer"
               >
-                Create Account
+                Register
               </button>
-            </motion.div>
+            </div>
           </motion.div>
         </div>
       </motion.div>
@@ -598,7 +593,8 @@ const Account = () => {
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
-      className="min-h-screen bg-gradient-to-r from-sky-100 via-orange-100 to-red-100 py-12 px-4 sm:px-6 lg:px-8"
+      transition={{ duration: 0.25 }}
+      className="min-h-screen py-12 px-4 sm:px-6 lg:px-8"
     >
       {/* Delete Account Modal */}
       <Transition.Root show={showDeleteModal} as={React.Fragment}>
